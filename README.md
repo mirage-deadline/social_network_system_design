@@ -23,6 +23,8 @@ Homework for the [course of System Design](https://google.com)
 - Always store data (no data is ever purged)
 - 99.95% availability
 - Geo distribution is not needed
+- Limits:
+  - Max number of followers: 1kk
 - Typical Activities (per user):
   - 1 post per week
   - 3 comments per week
@@ -34,9 +36,9 @@ Homework for the [course of System Design](https://google.com)
   - Comment on a post: ≤ 1s
   - Search posts by geo: ≤ 2s
   - Load the feed: ≤ 2s
-- Seasonality. Usage spikes expected during peak travel/holiday seasons (e.g., summer vacations, winter holidays), with a possible **30-40% increase** in daily activity (posts, comments, feed views). The system must handle these peaks while maintaining performance and availability targets.
+- Seasonality. Usage spikes expected during peak travel/holiday seasons (e.g., summer vacations, winter holidays), with a possible **30-40% increase** in daily activity (posts, comments, feed views). The system must handle these peaks while maintaining performance and availability targets
 
----
+--- 
 
 
 ## Calculation
