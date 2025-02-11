@@ -1,6 +1,6 @@
 # System design for social network
 
-Homework for the [course of System Design](https://google.com)
+Homework for the [System Design course](https://google.com)
 
 
 ## Requirements
