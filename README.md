@@ -52,29 +52,29 @@ Homework for the [System Design course](https://google.com)
 ### Posts
 
 ```
-RPC(write) = 10kk * 1 post per week / 7 / 86400 ~= 17
-RPC(read) = 10kk * 3 time per day view feeds(15 posts) / 86400 ~= 350
+RPS(write) = 10kk * 1 post per week / 7 / 86400 ~= 17
+RPS(read) = 10kk * 3 time per day view feeds(15 posts) / 86400 ~= 350
 ```
 
 ### Comments
 
 ```
-RPC(write) = 10kk * 3 comments per week / 7 / 86400 ~= 50
-RPC(read) = 10kk * 2 time per day read comments(5 comments) / 86400 ~= 231
+RPS(write) = 10kk * 3 comments per week / 7 / 86400 ~= 50
+RPS(read) = 10kk * 2 time per day read comments(5 comments) / 86400 ~= 231
 ```
 
 ### Ratings
 
 ```
-RPC(write) = 10kk * 5 ratings per day / 86400 ~= 600
-RPC(read) = 10kk * 8 ratings per day / 86400 ~= 925
+RPS(write) = 10kk * 5 ratings per day / 86400 ~= 600
+RPS(read) = 10kk * 8 ratings per day / 86400 ~= 925
 
 ```
 
 ### Spots
 
 ```
-RPC(read) = 10kk * 1 time per week view popular spots / 7 / 86400 ~= 20
+RPS(read) = 10kk * 1 time per week view popular spots / 7 / 86400 ~= 20
 ```
 
 
