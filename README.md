@@ -112,6 +112,7 @@ RPS(read) = 10kk * 1 time per week view popular spots / 7 / 86400 ~= 20
 
 --- 
 
+ 
 ## Traffic
 
 ### Posts
@@ -139,5 +140,6 @@ Traffic (read) = 231 * 5 * 300B = 338KB/s
 Traffic (write) = 600 * 33B = 20KB/s
 Traffic (read) = 925 * 33B = 30KB/s
 ```
+
 
 **For the peak load, we need to add 40% to the calculated values.**
