@@ -6,16 +6,6 @@ info:
     email: dmitrio.skripka@gmail.com
   version: 1.0.0
 
-
-tags:
-  - name: posts
-  - name: comments
-  - name: ratings
-  - name: subscriptions
-  - name: media
-  - name: spots
-
-
 components:
   securitySchemes:
     BearerAuth:
