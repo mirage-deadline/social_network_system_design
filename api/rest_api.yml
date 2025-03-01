@@ -446,6 +446,38 @@ paths:
         '500':
           description: Internal server error
 
+  /posts/{post_id}/comments:
+    get:
+      tags:
+        - posts
+      summary: Get comments by post ID
+      description: Retrieves a list of comments for a specified post, identified by post_id. Author context is derived from the Bearer token.
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: post_id
+          in: path
+          description: Unique identifier of the post to retrieve comments for
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: "123e4567-e89b-12d3-a456-426614174000"
+      responses:
+        '200':
+          description: List of comments retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetCommentsResponse'
+        '401':
+          description: Unauthorized (invalid or missing Bearer token)
+        '404':
+          description: Post not found
+        '500':
+          description: Internal server error
   /comments:
     post:
       tags:
@@ -547,39 +579,6 @@ paths:
         '500':
           description: Internal server error
 
-  /comments/{post_id}:
-    get:
-      tags:
-        - comments
-      summary: Get comments by post ID
-      description: Retrieves a list of comments for a specified post, identified by post_id. Author context is derived from the Bearer token.
-      security:
-        - BearerAuth: []
-      parameters:
-        - name: post_id
-          in: path
-          description: Unique identifier of the post to retrieve comments for
-          required: true
-          schema:
-            type: string
-            format: uuid
-            example: "123e4567-e89b-12d3-a456-426614174000"
-      responses:
-        '200':
-          description: List of comments retrieved successfully
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/GetCommentsResponse'
-        '401':
-          description: Unauthorized (invalid or missing Bearer token)
-        '404':
-          description: Post not found
-        '500':
-          description: Internal server error
-
   /ratings:
     post:
       tags:
@@ -657,47 +656,6 @@ paths:
         '500':
           description: Internal server error
 
-  /ratings/{rating_id}:
-    put:
-      tags:
-        - ratings
-      summary: Update a rating
-      description: Updates a rating identified by rating_id with the provided value. Author context is derived from the Bearer token.
-      operationId: updateRating
-      security:
-        - BearerAuth: []
-      parameters:
-        - name: rating_id
-          in: path
-          description: Unique identifier of the rating to update
-          required: true
-          schema:
-            type: string
-            format: uuid
-            example: "6ba7b810-9dad-11d1-80b4-00c04fd430c8"
-      requestBody:
-        description: Updated rating value
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateRatingRequest'
-      responses:
-        '200':
-          description: Rating updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RatingResponse'
-        '401':
-          description: Unauthorized (invalid or missing Bearer token)
-        '404':
-          description: Rating not found
-        '422':
-          description: Validation error on input data (e.g., invalid value)
-        '500':
-          description: Internal server error
-
     delete:
       tags:
         - ratings
@@ -727,7 +685,7 @@ paths:
         '500':
           description: Internal server error
 
-  /subscription:
+  /subscriptions:
     post:
       tags:
         - subscriptions
@@ -755,8 +713,7 @@ paths:
         '500':
           description: Internal server error
 
-  /unsubscription:
-    post:
+    delete:
       tags:
         - subscriptions
       summary: Unsubscribe
