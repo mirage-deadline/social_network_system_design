@@ -285,4 +285,5 @@ SSD(NVMe)
   - 600GB / 1TB = 1 disk
 - Total disks: max(1, 1, 1) = 1 disk
 
-Decision - SSD(NVMe) 1TB by 1 disk cause the price is near to 2 SSD(SATA) 1TB
+Decision - SSD(SATA) 500GB by 2 disks
+Cold storage HDD 50GB by 16 disks
