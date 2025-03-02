@@ -141,3 +141,12 @@ Traffic (read) = 925 * 33B = 30KB/s
 ```
 
 **For the peak load, we need to add 40% to the calculated values.**
+
+
+## Disks evaluation for 1 year
+
+### Posts
+
+#### Meta
+
+capacity = 
