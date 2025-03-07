@@ -286,4 +286,3 @@ SSD(NVMe)
 - Total disks: max(1, 1, 1) = 1 disk
 
 Decision - SSD(SATA) 500GB by 2 disks
-Cold storage HDD 50GB by 16 disks
