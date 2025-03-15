@@ -1,3 +1,11 @@
+// Replication:
+// master - slave per 1 DS
+// RF = 3 (sync + async)
+//
+// Sharding:
+// not needed
+
+
 Table comments {
   id integer [primary key]
   post_id integer

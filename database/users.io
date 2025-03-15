@@ -1,3 +1,11 @@
+// Replication:
+// master - slave per 1 DS
+// RF = 3 (sync + async)
+//
+// Sharding:
+// key based by id
+// for subscriptions table we use column follower_id as an id for sharding
+
 Table users {
   id integer [primary key]
   username varchar

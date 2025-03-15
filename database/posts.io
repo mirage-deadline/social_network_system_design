@@ -1,3 +1,11 @@
+// Replication:
+// master - slave per 1 DS
+// RF = 3 (sync + async)
+//
+// Sharding:
+// key based by user_id
+// places table should be stored separately
+
 Table posts {
   id integer [primary key]
   user_id integer

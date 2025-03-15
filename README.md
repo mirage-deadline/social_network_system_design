@@ -143,7 +143,7 @@ Traffic (read) = 925 * 33B = 30KB/s
 **For the peak load, we need to add 40% to the calculated values.**
 
 
-## Disks evaluation for 1 year
+## Disks and hosts evaluation for 1 year
 
 ### Posts
 
@@ -181,6 +181,9 @@ SSD(NVMe)
 - Total disks: max(1, 1, 1) = 1 disk
 
 Decision - SSD(SATA) 1TB by 1 disk
+Hosts = 1 host
+Hosts with replication (3RF) = 3 hosts
+
 
 #### Media
 
@@ -203,8 +206,8 @@ SSD(SATA)
 - disks for throughput
   - 17MB/s / 500MB/s = 1 disk
 - discs for capacity
-  - 511TB / 80TB = 7 disks
-- Total disks: max(1, 1, 7) = 7 disks
+  - 511TB / 40TB = 14 disks
+- Total disks: max(1, 1, 7) = 14 disks
 
 SSD(NVMe)
 - disks for iops
@@ -215,8 +218,17 @@ SSD(NVMe)
   - 511TB / 25TB = 21 disks
 - Total disks: max(1, 1, 21) = 21 disks
 
-Decision - SSD(SATA) 80TB by 7 disks
+Decision - SSD(SATA) 40TB by 14 disks
 And for cold storage HDD 20TB by 26 disks
+
+Hot storage:
+Hosts = 14 disks / 2 disks per host = 7 hosts
+Hosts with replication (3RF) = 21 hosts
+
+Cold storage:
+Hosts = 26 disks / 2 disks per host = 13 hosts
+Hosts with replication (3RF) = 39 hosts
+
 
 ### Comments
 
@@ -252,6 +264,8 @@ SSD(NVMe)
 
 Decision - SSD(SATA) 1TB by 1 disk
 
+Hosts = 1 host
+Hosts with replication (3RF) = 3 hosts
 
 ### Ratings
 
@@ -286,3 +300,6 @@ SSD(NVMe)
 - Total disks: max(1, 1, 1) = 1 disk
 
 Decision - SSD(SATA) 500GB by 2 disks
+
+Hosts = 2 disks / 2 disks per host = 1 host
+Hosts with replication (3RF) = 3 hosts
