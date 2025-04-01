@@ -1,0 +1,44 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Person(user, "User")
+Container(reverseProxy, "Reverse proxy", "Nginx")
+Container(apiGateway, "API Gateway", "Golang")
+
+System_Boundary(usersSystem, "Users system") {
+Container(usersService, "Users Service", "Golang", "Handle and store users")
+}
+
+System_Boundary(subscriptionsSystem, "Subscriptions system") {
+Container(subscriptionsService, "Subscriptions Service", "Golang", "Handle and store subscriptions data")
+}
+
+System_Boundary(feedSystem, "Feed system") {
+Container(feedService, "Feed Service", "Golang", "Store and refresh users feed")
+}
+
+
+System_Boundary(postsSystem, "Posts system") {
+Container(postsService, "Posts Service", "Golang", "Handle and store posts data")
+}
+
+System_Boundary(ratingsSystem, "Ratings system") {
+Container(ratingsService, "Ratings Service", "Golang", "Handle and store ratings data")
+}
+
+System_Boundary(commentsSystem, "Comments system") {
+Container(commentsService, "Comments Service", "Golang", "Handle and store comments data")
+}
+
+
+Rel(user, reverseProxy, "CRUD operations", "REST")
+Rel(reverseProxy, apiGateway, "CRUD operations", "REST")
+
+Rel(apiGateway, usersService, "CRUD operations", "gRPC")
+Rel(apiGateway, subscriptionsService, "CRUD operations", "gRPC")
+Rel(apiGateway, feedService, "CRUD operations", "gRPC")
+Rel(apiGateway, postsService, "CRUD operations", "gRPC")
+Rel(apiGateway, ratingsService, "CRUD operations", "gRPC")
+Rel(apiGateway, commentsService, "CRUD operations", "gRPC")
+
+@enduml

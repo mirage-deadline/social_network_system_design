@@ -1,0 +1,19 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Person(user, "User")
+Container(reverseProxy, "Reverse proxy", "Nginx")
+Container(apiGateway, "API Gateway", "Golang")
+ContainerQueue(usersQueue, "User events topic", "Kafka", "User events")
+
+System_Boundary(usersSystem, "Users system") {
+Container(usersService, "Users Service", "Golang", "Handle and store users")
+ContainerDb(usersDatabase, "Users database", "PostgreSQL", "Stores users",  $tags="db")
+}
+
+Rel(user, reverseProxy, "Get/Create/ ... user", "REST")
+Rel(reverseProxy, apiGateway, "Get/Create/ ... user", "REST")
+Rel(apiGateway, usersService, "Get/Create/ ... user", "gRPC")
+Rel(usersService, usersDatabase, "Get/update users data")
+Rel(usersService, usersQueue, "Produce user events")
+@enduml

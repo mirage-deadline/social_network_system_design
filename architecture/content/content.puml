@@ -1,0 +1,21 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Person(user, "User")
+
+Container(reverseProxy, "Reverse proxy", "Nginx")
+Container(apiGateway, "API Gateway", "Golang")
+Container(cdn, "CDN", "Cloudflare")
+
+System_Boundary(contentSystem, "Content system") {
+Container(contentService, "Content Service", "Golang", "Gives media and generates presigned urls for uploading", $tags="webApp")
+ContainerDb(contentStorage, "Content storage", "S3", "Stores files",  $tags="db")
+}
+
+Rel(user, reverseProxy, "Upload content(images, videos, ...)", "REST")
+Rel(reverseProxy, apiGateway, "Upload content(images, videos, ...)t", "REST")
+Rel(apiGateway, contentService, "Upload content(images, videos, ...)t", "gRPC")
+Rel(contentService, contentStorage, "Delete jobs, files getting/uploading")
+Rel(user, cdn, "Gets static content", "HTTPS")
+Rel(cdn, apiGateway, "Pulls static content", "HTTPS")
+@enduml
