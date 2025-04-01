@@ -1,0 +1,24 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Person(user, "User")
+Container(reverseProxy, "Reverse proxy", "Nginx")
+Container(apiGateway, "API Gateway", "Golang")
+ContainerQueue(ratings_out, "ratings_out topic", "Kafka", "Ratings update events")
+
+System_Boundary(ratingsSystem, "Ratings system") {
+Container(ratingsService, "Ratings Service", "Golang", "Handle and store ratings")
+ContainerDb(ratingsDatabase, "Ratings database", "PostgreSQL", "Stores user ratings",  $tags="db")
+Rel(ratingsService, ratingsDatabase, "CRUD operations")
+Rel(ratingsService, ratings_out, "Produce update events about ratings")
+}
+
+System_Ext(analyticsSystem, "External analytics system") {
+}
+
+Rel(user, reverseProxy, "CRUD operations", "REST")
+Rel(reverseProxy, apiGateway, "CRUD operations", "REST")
+Rel(apiGateway, ratingsService, "CRUD operations", "gRPC")
+
+Rel(analyticsSystem, ratings_out, "Ratings updates")
+@enduml

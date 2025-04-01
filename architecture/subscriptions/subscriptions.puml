@@ -1,0 +1,28 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Person(user, "User")
+Container(reverseProxy, "Reverse proxy", "Nginx")
+Container(apiGateway, "API Gateway", "Golang")
+ContainerQueue(subscriptions_out, "subscriptions_out topic", "Kafka", "Subscriptions update events")
+
+System_Boundary(subscriptionsSystem, "Subscriptions system") {
+Container(subscriptionsService, "Subscriptions Service", "Golang", "Handle and store subscriptions")
+ContainerDb(subscriptonsDatabase, "Subscriptions database", "PostgreSQL", "Stores user subscriptions",  $tags="db")
+Rel(subscriptionsService, subscriptonsDatabase, "CRUD operations")
+Rel(subscriptionsService, subscriptions_out, "Produce update events about subscriptions")
+}
+
+System_Boundary(feedSystem, "Feed system") {
+}
+
+System_Ext(analyticsSystem, "External analytics system") {
+}
+
+Rel(user, reverseProxy, "CRUD operations", "REST")
+Rel(reverseProxy, apiGateway, "CRUD operations", "REST")
+Rel(apiGateway, subscriptionsService, "CRUD operations", "gRPC")
+
+Rel(analyticsSystem, subscriptions_out, "Subscriptions updates")
+Rel(feedSystem, subscriptions_out, "Subscriptions updates")
+@enduml

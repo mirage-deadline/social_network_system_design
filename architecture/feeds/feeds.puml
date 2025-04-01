@@ -1,0 +1,41 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Person(user, "User")
+Container(reverseProxy, "Reverse proxy", "Nginx")
+Container(apiGateway, "API Gateway", "Golang")
+ContainerQueue(feeds_out, "feeds_out topic", "Kafka", "Feed events")
+
+System_Boundary(feedsSystem, "Feeds system") {
+Container(feedsService, "Feeds Service", "Golang", "Handle and store feeds")
+ContainerDb(feedsDatabase, "Feeds database", "PostgreSQL", "Stores user feeds",  $tags="db")
+ContainerDb(feedsCache, "Feeds cache", "Memory DB", "Stores user feeds(calculated)",  $tags="db")
+ContainerDb(feedsCacheEmergency, "Feeds emergency cache", "Memory DB", "Stores user feeds for emergency cases. Gracefull degradation.",  $tags="db")
+Rel(feedsService, feedsDatabase, "Initial getting feed for user")
+Rel(feedsService, feedsCache, "Initial getting feed for user")
+Rel(feedsService, feedsCacheEmergency, "Cached values for cases when our system suffer from degradation")
+Rel(feedsService, feeds_out, "Updates about state or requests to update user's feed")
+}
+
+System_Boundary(feedSystem, "Feed system") {
+}
+
+System_Boundary(commentsSystem, "Comments system") {
+}
+
+System_Boundary(ratingsSystem, "Ratings system") {
+}
+
+System_Ext(analyticsSystem, "External analytics system") {
+}
+
+Rel(user, reverseProxy, "Get operations", "REST")
+Rel(reverseProxy, apiGateway, "Get operations", "REST")
+Rel(apiGateway, feedsService, "Get operations", "gRPC")
+
+Rel(analyticsSystem, feeds_out, "Update users feed (Job + separate requests")
+Rel(analyticsSystem, feedsService, "Feeds updates")
+
+Rel(feedsService, commentsSystem, "Get related comments")
+Rel(feedsService, ratingsSystem, "Get related ratings")
+@enduml

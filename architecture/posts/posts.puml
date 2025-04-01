@@ -1,0 +1,28 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Person(user, "User")
+Container(reverseProxy, "Reverse proxy", "Nginx")
+Container(apiGateway, "API Gateway", "Golang")
+ContainerQueue(posts_out, "posts_out topic", "Kafka", "Posts update events")
+
+System_Boundary(postsSystem, "Posts system") {
+Container(postsService, "Posts Service", "Golang", "Handle and store posts")
+ContainerDb(postsDatabase, "Posts database", "PostgreSQL", "Stores user posts",  $tags="db")
+Rel(postsService, postsDatabase, "CRUD operations")
+Rel(postsService, posts_out, "Produce update events about posts")
+}
+
+System_Boundary(feedSystem, "Feed system") {
+}
+
+System_Ext(analyticsSystem, "External analytics system") {
+}
+
+Rel(user, reverseProxy, "CRUD operations", "REST")
+Rel(reverseProxy, apiGateway, "CRUD operations", "REST")
+Rel(apiGateway, postsService, "CRUD operations", "gRPC")
+
+Rel(analyticsSystem, posts_out, "Posts updates")
+Rel(feedSystem, posts_out, "Posts updates")
+@enduml
